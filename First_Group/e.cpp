@@ -18,7 +18,7 @@ vector<int> makeRandVec(int count){
 }
 
 bool findRightAnswer(const vector<int>& Bob, const vector<int>& Alice, const int len){
-  int messageSize = 6;
+  int messageSize = 7;
   int ref;
   for (size_t i = 0; i < messageSize; i++) {
     ref = Bob[rand()%len];
@@ -45,44 +45,47 @@ bool alwaysRightAnswer(const vector<int>& Bob, const vector<int>& Alice, const i
       BobIndex = BobIndex+1;
     }
   }
+
   if(len/10 <= matches)
     return true;
   return false;
 
 }
 
-bool testAlgorithm(const int len){
+int testAlgorithm(const int len){
   vector<int> Bob = makeRandVec(len);
   vector<int> Alice = makeRandVec(len);
   bool ourAlg = findRightAnswer(Bob,Alice,len);
   bool ans = alwaysRightAnswer(Bob,Alice,len);
-  cout << Bob[0] << endl << Alice[0] << endl;
-  cout << ourAlg << endl << ans << endl;
   if(ourAlg != ans && !ans){
-    throw invalid_argument("Breaking established rules for this excercise: Yes when no elements are the same");
+    return 2;
   }else if(ourAlg == ans){
-    return true;
+    return 1;
   }else{
-    return false;
+    return 0;
   }
 }
 
+
 int main(int argc, char const *argv[]) {
   srand(time(NULL));
-  cout << testAlgorithm(100) << endl;
 
-  // cout << Bob[0] << " "  << Alice[0] << endl;
-  // if(alwaysRightAnswer(Bob,Alice,100)){
-  //   cout << "More than 10 percent are the same" << endl;
-  // }else{
-  //   cout << "Less than 10 percent are the same" << endl;
-  // }
-  //
-  // if(findRightAnswer(Bob,Alice,100)){
-  //   cout << "RandAlg says more than 10 percent" << endl;
-  // }else{
-  //   cout << "RandAlg says less than 10 percent" << endl;
-  // }
+  double count = 100000;
+  double truePos = 0;
+  double falsePos = 0;
+  int elem;
+  for (size_t i = 0; i < count; i++) {
+    elem = testAlgorithm(100);
+    if(elem == 2){
+      falsePos = falsePos + 1;
+    }else if(elem == 1){
+      truePos = truePos + 1;
+    }
+  }
+  cout << "False Positives: " << falsePos << endl;
+  cout << "True Pos/Fal: " << truePos << endl;
+  cout << "Tests: " << count << endl;
+  cout << "Percentage: " << (int) ((truePos/count)*100+0.5) << endl;
 
   return 0;
 }
