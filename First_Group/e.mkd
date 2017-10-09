@@ -1,0 +1,37 @@
+# Group Exercise 1 Question E
+
+### Philipson.S, Melin.O, Palm.J
+
+\newpage
+
+## Algorithm Description
+
+Our algorithm samples $\lceil log(n) \rceil$  words from Alices wordlist and
+sends them one by one to Bob, who checks if he's got the same word in his list.
+If Bob can match at least 10 percent of the words he receives to his own
+wordlist he believes that it's a fair representation of Alices wordlist as well,
+and reports the Hypothesis to be true.
+
+### Pseudo Code
+
+
+```
+  A = List of Alices words
+  B = List of Bobs words
+    where |A| == |B|
+
+  n = The length of the lists (|A|)
+
+  for i -> 0 to log n
+    random sample elem from A
+    if elem exists in B
+      counter++
+    end
+  end
+
+  if counter > (log n)/10
+    return true
+  else
+    return false
+  end
+```
