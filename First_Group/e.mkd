@@ -12,7 +12,7 @@ If Bob can match at least 10 percent of the words he receives to his own
 wordlist he believes that it's a fair representation of Alices wordlist as well,
 and reports the Hypothesis to be true.
 
-### Pseudo Code
+## Pseudo Code
 
 
 ```
@@ -35,3 +35,5 @@ and reports the Hypothesis to be true.
     return false
   end
 ```
+
+## Theoretical Approach
