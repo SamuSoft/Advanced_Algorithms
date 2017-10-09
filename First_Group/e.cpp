@@ -3,22 +3,21 @@
 #include <vector>
 #include <iostream>
 #include <algorithm>
-#include <stdexcept>
+#include <math.h>
 
 
 using namespace std;
 
 vector<int> makeRandVec(int count){
   vector<int> retVal(count);
-  int val = rand()%200;
+  int val = rand()%(2*count);
   for (size_t i = 0; i < count; i++) {
     retVal[i] = val++;
   }
   return retVal;
 }
 
-bool findRightAnswer(const vector<int>& Bob, const vector<int>& Alice, const int len){
-  int messageSize = 7;
+bool findRightAnswer(const vector<int>& Bob, const vector<int>& Alice, const int len, const int messageSize){
   int ref;
   for (size_t i = 0; i < messageSize; i++) {
     ref = Bob[rand()%len];
@@ -52,10 +51,10 @@ bool alwaysRightAnswer(const vector<int>& Bob, const vector<int>& Alice, const i
 
 }
 
-int testAlgorithm(const int len){
+int testAlgorithm(const int len, const int logs){
   vector<int> Bob = makeRandVec(len);
   vector<int> Alice = makeRandVec(len);
-  bool ourAlg = findRightAnswer(Bob,Alice,len);
+  bool ourAlg = findRightAnswer(Bob,Alice,len, logs);
   bool ans = alwaysRightAnswer(Bob,Alice,len);
   if(ourAlg != ans && !ans){
     return 2;
@@ -70,12 +69,19 @@ int testAlgorithm(const int len){
 int main(int argc, char const *argv[]) {
   srand(time(NULL));
 
+  double size;
+  cout << "Input list size:" << endl;
+  cin >> size;
+  cout << "Input number of tests: " << endl;
   double count = 100000;
+  cin >> count;
+  int logsize = (int) log2(size);
+
   double truePos = 0;
   double falsePos = 0;
   int elem;
   for (size_t i = 0; i < count; i++) {
-    elem = testAlgorithm(100);
+    elem = testAlgorithm(size, logsize);
     if(elem == 2){
       falsePos = falsePos + 1;
     }else if(elem == 1){
