@@ -19,12 +19,16 @@ vector<int> makeRandVec(int count){
 
 bool findRightAnswer(const vector<int>& Bob, const vector<int>& Alice, const int len, const int messageSize){
   int ref;
+  int j = 0;
   for (size_t i = 0; i < messageSize; i++) {
     ref = Bob[rand()%len];
     //cout << ref << endl;
     if (std::find(Alice.begin(), Alice.end(), ref) != Alice.end()) {
-      return true;
+      j = j+1;
     }
+  }
+  if(j > (((double) messageSize)/10)){
+    return true;
   }
   return false;
 }
