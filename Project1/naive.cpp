@@ -1,5 +1,6 @@
 #include <vector>
 #include <iostream>
+#include <cmath>
 
 
 std::vector<std::pair<double,double> > createTravelVector(){
@@ -14,6 +15,12 @@ std::vector<std::pair<double,double> > createTravelVector(){
   return list;
 }
 
+double dist(const std::pair<double,double>& a, const std::pair<double,double>& b){
+  double xval = a.first - b.first; xval = xval*xval;
+  double yval = a.second - b.second; yval = yval*yval;
+  return sqrt(xval+yval);
+}
+
 std::vector<int> greedyTour(const std::vector<std::pair<double,double> >& list){
   // tour[0] = 0
   // used[0] = true
@@ -25,14 +32,30 @@ std::vector<int> greedyTour(const std::vector<std::pair<double,double> >& list){
   //   tour[i] = best
   //   used[best] = true
   // return tour
-  std::vector<int> first(1);
-  return first;
+
+  std::vector<int> tour(list.size());
+  std::vector<bool> used(list.size());
+  tour[0]=0;
+  used[0]=true;
+  int best;
+  for (size_t i = 1; i < list.size(); i++) {
+    best = -1;
+    for (size_t j = 0; j < list.size(); j++) {
+      if (!used[j] && (best == -1 || dist(list[tour[i-1]],list[j]) < dist(list[tour[i-1]],list[best]))) {
+        best = j;
+      }
+    }
+    tour[i] = best;
+    used[best]=true;
+  }
+  return tour;
 }
 
 int main(int argc, char const *argv[]) {
-  std::vector<std::pair<double,double> > list = createTravelVector();
+  std::vector<std::pair<double,double> > waypoints = createTravelVector();
+  std::vector<int> list = greedyTour(waypoints);
   for (size_t i = 0; i < list.size(); i++) {
-    std::cout << list[i].first << ' ' << list[i].second << std::endl;
+    std::cout << list[i] << std::endl;
   }
   return 0;
 }
