@@ -1,0 +1,37 @@
+# Group Exercise 1 Question B
+
+The proof fails to normalize the input variables when calculating the
+Hoeffding Bound. Hoeffding bound expects the variables to be between
+$0$ and $1$, but in the provided proof it's calculated with variables
+between $1$ and $M$.
+
+## Example
+
+Let $A = [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 100 ]$ (we fill an array of
+size $10$ with $9$ ones and one item with the value $100$). In this
+case the probability of not finding the single element with value $100$
+is:
+
+$$\big(1 - \frac{1}{10}\big)^s = \big(1 - \frac{1}{10}\big)^\frac{1}{\epsilon^2}$$ 
+
+When that happens (not finding the single $100$) the algorithm will give
+the answer $n (=10)$. We use the left hand size of the bounds provided in
+the proof to explore the size of $\epsilon$ (remember A here is the average
+value of the array):
+
+$$nA(1-\epsilon) \leq \textit{sum} \leq nA(1+\epsilon)$$
+
+$$
+\begin{aligned}
+10 \frac{109}{10} (1-\epsilon) &\leq 10\\
+109 (1-\epsilon) &\leq 10\\
+\frac{99}{109} &\leq \epsilon\\
+\end{aligned}
+$$
+
+And when $\epsilon$ is at least $\frac{99}{109}$ the probability of error (i.e.
+not finding the single $100$ in the array) is:
+
+$$\big(1 - \frac{1}{10}\big)^\frac{1}{\frac{99}{109}^2} \approx 0.88...$$ 
+
+which is much bigger than the probability of error in the suggested proof ($\frac{1}{3}$).
