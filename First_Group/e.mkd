@@ -1,7 +1,5 @@
 # Group Exercise 1 Question E
 
-### Philipson.S, Melin.O, Palm.J
-
 ## Algorithm Description
 
 Our algorithm samples $\lceil log(n) \rceil$  words from Alices wordlist and
