@@ -30,7 +30,7 @@ $$
 $$
 
 And when $\epsilon$ is at least $\frac{99}{109}$ the probability of error (i.e.
-not finding the single $100$ in the array) is:
+not finding the single $100$ in the array) will be at least:
 
 $$\big(1 - \frac{1}{10}\big)^\frac{1}{\frac{99}{109}^2} \approx 0.88...$$ 
 
