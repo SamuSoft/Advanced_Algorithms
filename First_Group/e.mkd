@@ -44,6 +44,6 @@ Where $X$ in this case is the stochastic variable representing the algorithms
 output with a sample space $\Omega={true,false}$.
 
 It's easy to see that when $n \rightarrow \infty$ the probability we will answer
-YES when 10% of the words are equal will approach $1$. Thus fulfilling the basic
-needs for a $W.H.P$. The constant $k$ can be used to linearly increase the
-probabilities growth rate.
+YES when 10% of the words are equal will approach $1$. This since
+$P=1-\frac{1}{log(n)}$. Thus fulfilling the basic needs for a $W.H.P$. The
+constant $k$ can be used to linearly increase the probabilities growth rate.
