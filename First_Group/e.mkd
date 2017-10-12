@@ -44,3 +44,7 @@ $$P(X = True) = 1 - P(X = False) = 1 - (1-p)^{k\cdot log_{2}(n)}$$
 
 Where $X$ in this case is the stochastic variable representing the algorithms
 output with a sample space $\Omega={true,false}$.
+
+It's easy to see that when $n \rightarrow \infty$ the probability we will answer
+YES when 10% of the words are equal will approach $1$. The constant $k$ can be used
+to increase that probability.
