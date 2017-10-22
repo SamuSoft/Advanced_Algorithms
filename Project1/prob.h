@@ -3,7 +3,6 @@
 #define prob_H
 
 #include <stdlib.h>
-#include <time.h>
 #include <vector>
 #include <math.h>
 #include <tuple>
