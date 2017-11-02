@@ -175,17 +175,51 @@ vector<int> christofides(int start) {
   return path;
 }
 
-std::vector<int> tsp_2opt(std::vector<int> tour) {
+std::vector<int> tsp_25opt(std::vector<int> tour) {
+  float cur;
+  float after;
   bool improved = true;
   while (improved) {
     improved = false;
     for (int i = 0; i < N; ++i) {
       for (int j = i + 3; j < N; ++j) {
-        float cur = dists[tour[i]][tour[i+1]] + dists[tour[j]][tour[j-1]];
-        float after = dists[tour[i]][tour[j-1]] + dists[tour[j]][tour[i+1]];
+        // 2-opt
+        cur = dists[tour[i]][tour[i+1]] + dists[tour[j]][tour[j-1]];
+        after = dists[tour[i]][tour[j-1]] + dists[tour[j]][tour[i+1]];
 
         if (after < cur) {
           reverse(tour.begin()+i+1, tour.begin()+j);
+          improved = true;
+        }
+        // 2.5-opt
+        // A-B-C, D-E -> A-C, D-B-E
+        cur = dists[tour[i]][tour[i + 1]] +
+              dists[tour[i + 1]][tour[i + 2]] +
+              dists[tour[j - 1]][tour[j]];
+        after = dists[tour[i]][tour[i + 2]] +
+                dists[tour[j - 1]][tour[i + 1]] +
+                dists[tour[i + 1]][tour[j]];
+        if (after < cur) {
+          int temp = tour[i + 1];
+          for (int m = i + 2; m < j; ++m) {
+            tour[m - 1] = tour[m];
+          }
+          tour[j - 1] = temp;
+          improved = true;
+        }
+        // A-B, C-D-E -> A-D-B, C-E
+        cur = dists[tour[i]][tour[i + 1]] +
+              dists[tour[j - 2]][tour[j - 1]] +
+              dists[tour[j - 1]][tour[j]];
+        after = dists[tour[i]][tour[j - 1]] +
+                dists[tour[j - 1]][tour[i + 1]] +
+                dists[tour[j - 2]][tour[j]];
+        if (after < cur) {
+          int temp = tour[j - 1];
+          for (int m = j - 2; m > i; --m) {
+            tour[m + 1] = tour[m];
+          }
+          tour[i + 1] = temp;
           improved = true;
         }
       }
@@ -227,7 +261,7 @@ int main() {
   for (int i = 0; i < K; ++i) {
     int start = rand() % N;
     tour = christofides(start);
-    tour = tsp_2opt(tour);
+    tour = tsp_25opt(tour);
     float dist = tour_distance(tour);
     if (dist < best_dist) {
       best_dist = dist;
