@@ -4,6 +4,7 @@
 
 #include <vector>
 #include <algorithm>
+#include <numeric>
 
 //returns a random solution as a pair of solution list and total length
 
